@@ -1,0 +1,34 @@
+{
+  "name": "orca-code",
+  "version": "1.0.0",
+  "description": "Intelligent Codebase Architecture Radar & Context Engine for AI Coding Agents and Developers",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "orca": "./bin/orca.js"
+  },
+  "scripts": {
+    "start": "node ./bin/orca.js",
+    "test": "node --test test/*.test.js",
+    "scan": "node ./bin/orca.js scan",
+    "map": "node ./bin/orca.js map",
+    "audit": "node ./bin/orca.js audit",
+    "ui": "node ./bin/orca.js ui"
+  },
+  "keywords": [
+    "orca",
+    "ai-agent",
+    "context-window",
+    "codebase-analysis",
+    "architecture-radar",
+    "llm-context",
+    "prompt-engineering",
+    "code-metrics",
+    "ast-map"
+  ],
+  "author": "wangzhi <1141532572@qq.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
