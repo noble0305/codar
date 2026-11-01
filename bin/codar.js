@@ -7,6 +7,7 @@ import { scanCodebase } from "../src/scanner/walker.js";
 import { auditCodebase } from "../src/audit/advisor.js";
 import { packageContext } from "../src/context/packager.js";
 import { generateSkeleton } from "../src/symbols/extractor.js";
+import { syncAgentFile, isAgentMapStale } from "../src/agents/agentsMap.js";
 import { startServer } from "../src/web/server.js";
 import { renderDashboardHtml } from "../src/web/template.js";
 import { formatTokens, formatBytes } from "../src/utils/tokens.js";
@@ -69,13 +70,14 @@ ${c.bold("USAGE:")}
 ${c.bold("COMMANDS:")}
   ${c.cyan("scan")} [dir]                 Deep scan codebase metrics (LOC, tokens, languages)
   ${c.cyan("map")} [dir]                  Generate LLM-optimized symbol skeleton map
+  ${c.cyan("map --agents")}              Generate/update the AGENTS.md repo map for AI agents
   ${c.cyan("context")} <files...>         Pack files & dependencies within token budget
   ${c.cyan("audit")} [dir]                Run architecture health & complexity hotspot audit
   ${c.cyan("ui")} [dir]                   Launch interactive local web dashboard
   ${c.cyan("export")} [dir]               Export standalone single-file HTML report
 
 ${c.bold("OPTIONS:")}
-  --budget <tokens>         Token budget for context packager (default: 16000)
+  --budget <tokens>         Token budget for context packager (default: 16000) or agent map (default: 2000)
   --port <number>           Port for Web UI server (default: 3030)
   --output, -o <path>       Output destination file for export or context
   --json                    Output machine-readable JSON format
@@ -85,6 +87,8 @@ ${c.bold("OPTIONS:")}
 ${c.bold("EXAMPLES:")}
   codar scan
   codar map --max 10
+  codar map --agents
+  codar map --agents --check
   codar context src/index.js src/web/server.js --budget 8000
   codar audit
   codar ui --port 3030
@@ -149,6 +153,10 @@ function runScan(dir, rawArgs) {
 }
 
 function runMap(dir, rawArgs) {
+  if (rawArgs.includes("--agents")) {
+    return runAgentMap(dir, rawArgs);
+  }
+
   const maxIdx = rawArgs.indexOf("--max");
   const max = maxIdx !== -1 && rawArgs[maxIdx + 1] ? parseInt(rawArgs[maxIdx + 1], 10) : 20;
 
@@ -168,6 +176,28 @@ function runMap(dir, rawArgs) {
       console.log(`📄 ${f.path} (${f.lines} lines, ${formatTokens(f.tokens)} tokens)`);
     }
   }
+}
+
+function runAgentMap(dir, rawArgs) {
+  const budgetIdx = rawArgs.indexOf("--budget");
+  const budget = budgetIdx !== -1 && rawArgs[budgetIdx + 1] ? parseInt(rawArgs[budgetIdx + 1], 10) : 2000;
+  const outIdx = rawArgs.findIndex((a) => a === "--output" || a === "-o");
+  const output = outIdx !== -1 && rawArgs[outIdx + 1] ? rawArgs[outIdx + 1] : "AGENTS.md";
+
+  if (rawArgs.includes("--check")) {
+    const status = isAgentMapStale(dir, output);
+    if (status.stale) {
+      console.error(c.red(`✗ Agent map is stale (${status.reason}): ${status.filePath}`));
+      console.log(c.dim("Run `codar map --agents` to regenerate."));
+      process.exit(1);
+    }
+    console.log(c.green(`✓ Agent map is up to date (HEAD ${status.currentHead}): `) + c.cyan(status.filePath));
+    return;
+  }
+
+  const result = syncAgentFile(dir, { budget, output });
+  console.log(c.green(`✓ Agent map ${result.created ? "created" : "updated"}: `) + c.cyan(result.filePath));
+  console.log(c.dim(`  ${formatTokens(result.usedTokens)} / ${formatTokens(result.budget)} tokens` + (result.trimmed ? " (trimmed to fit — raise --budget for symbol-level detail)" : "")));
 }
 
 function runContext(rawArgs) {

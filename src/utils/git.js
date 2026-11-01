@@ -23,7 +23,7 @@ export function getGitInfo(rootDir) {
 
     let lastCommit = null;
     try {
-      const last = execSync("git log -1 --pretty=format:%h|%an|%cr|%s", execOpts).trim();
+      const last = execSync("git log -1 --pretty=format:'%h|%an|%cr|%s'", execOpts).trim();
       if (last) {
         const [hash, author, date, message] = last.split("|");
         lastCommit = { hash, author, date, message };

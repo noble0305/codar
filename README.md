@@ -90,6 +90,21 @@ Generates an LLM-optimized structural skeleton map of the repository without raw
 codar map --max 10
 ```
 
+**Agent map** — generate or update a token-budgeted repo map inside `AGENTS.md` so your AI coding agent (Claude Code, Codex, Cursor, ...) knows your architecture from the first session:
+
+```bash
+# Generate/update the codar block in AGENTS.md (2,000 token budget by default)
+codar map --agents
+
+# More room for symbol-level detail of top-complexity files
+codar map --agents --budget 4000
+
+# CI / pre-commit: exit non-zero when the map is stale relative to git HEAD
+codar map --agents --check
+```
+
+The block is split into a `codar:generated` section (managed by codar: directory structure, direct import graph, key files) and a `codar:manual` section (your own agent rules, preserved on regeneration).
+
 ### 3. `codar context <files...> [--budget <tokens>] [--output <file>]`
 Packages targeted source files and their local dependencies into a token-budgeted prompt Markdown snippet:
 
