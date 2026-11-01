@@ -12,7 +12,7 @@ test("startServer should serve dashboard and APIs", async () => {
     const resHtml = await fetch(`${srv.url}/`);
     assert.strictEqual(resHtml.status, 200);
     const htmlText = await resHtml.text();
-    assert.ok(htmlText.includes("ORCA ARCHITECTURE RADAR"));
+    assert.ok(htmlText.includes("CODAR ARCHITECTURE RADAR"));
 
     // 2. Test JSON API
     const resApi = await fetch(`${srv.url}/api/scan`);

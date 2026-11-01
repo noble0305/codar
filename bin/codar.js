@@ -22,7 +22,7 @@ if (!command || command === "--help" || command === "-h" || command === "help") 
 }
 
 if (command === "--version" || command === "-v" || command === "version") {
-  console.log(`orca v${VERSION}`);
+  console.log(`codar v${VERSION}`);
   process.exit(0);
 }
 
@@ -64,7 +64,7 @@ function printHelp() {
   console.log(banner());
   console.log(`
 ${c.bold("USAGE:")}
-  orca <command> [options]
+  codar <command> [options]
 
 ${c.bold("COMMANDS:")}
   ${c.cyan("scan")} [dir]                 Deep scan codebase metrics (LOC, tokens, languages)
@@ -83,12 +83,12 @@ ${c.bold("OPTIONS:")}
   -h, --help                Show help menu
 
 ${c.bold("EXAMPLES:")}
-  orca scan
-  orca map --max 10
-  orca context src/index.js src/web/server.js --budget 8000
-  orca audit
-  orca ui --port 3030
-  orca export -o report.html
+  codar scan
+  codar map --max 10
+  codar context src/index.js src/web/server.js --budget 8000
+  codar audit
+  codar ui --port 3030
+  codar export -o report.html
 `);
 }
 
@@ -188,7 +188,7 @@ function runContext(rawArgs) {
 
   if (files.length === 0) {
     console.error(c.red("Error: Please specify one or more file paths to package into context."));
-    console.log(c.dim("Example: orca context src/index.js src/utils/tokens.js --budget 8000\n"));
+    console.log(c.dim("Example: codar context src/index.js src/utils/tokens.js --budget 8000\n"));
     process.exit(1);
   }
 
@@ -199,7 +199,7 @@ function runContext(rawArgs) {
     console.log(c.green(`✓ Context package saved to: ${outPath} (${formatTokens(result.usedTokens)} / ${formatTokens(budget)} tokens)`));
   } else {
     console.log(result.markdown);
-    console.error(c.dim(`\n--- [Orca Context: ${result.itemCount} items, ${formatTokens(result.usedTokens)} / ${formatTokens(budget)} tokens] ---`));
+    console.error(c.dim(`\n--- [Codar Context: ${result.itemCount} items, ${formatTokens(result.usedTokens)} / ${formatTokens(budget)} tokens] ---`));
   }
 }
 
@@ -249,11 +249,11 @@ async function runUi(dir, rawArgs) {
   }
 
   console.log(banner());
-  console.log(c.dim("Starting Orca Web Radar Server..."));
+  console.log(c.dim("Starting Codar Web Radar Server..."));
 
   try {
     const srv = await startServer(dir, { port });
-    console.log(c.green(`✓ Orca Dashboard active at: `) + c.bold(c.cyan(srv.url)));
+    console.log(c.green(`✓ Codar Dashboard active at: `) + c.bold(c.cyan(srv.url)));
     console.log(c.dim("  Press Ctrl+C to stop server.\n"));
   } catch (err) {
     if (err.code === "EADDRINUSE") {
@@ -268,7 +268,7 @@ async function runUi(dir, rawArgs) {
 }
 
 function runExport(dir, rawArgs) {
-  let outPath = "orca-report.html";
+  let outPath = "codar-report.html";
   const oIdx = rawArgs.indexOf("-o") !== -1 ? rawArgs.indexOf("-o") : rawArgs.indexOf("--output");
   if (oIdx !== -1 && rawArgs[oIdx + 1]) {
     outPath = rawArgs[oIdx + 1];

@@ -33,7 +33,7 @@ export const c = {
 export function banner() {
   const art = [
     c.cyan("      .---.              "),
-    c.cyan("     /  .  \\             ") + c.bold(c.white("  ORCA ")) + c.dim("— Codebase Architecture Radar"),
+    c.cyan("     /  .  \\             ") + c.bold(c.white("  CODAR ")) + c.dim("— Codebase Architecture Radar"),
     c.cyan("    |  /|   |            ") + c.gray("  & Context Engine for AI Coding Agents"),
     c.cyan("    | | |   | ___        "),
     c.cyan("    \\  \\|  / '  _)       ") + c.dim("  v1.0.0 • High-Performance Local CLI"),

@@ -1,5 +1,5 @@
 /**
- * Self-contained HTML/CSS/JS template for Orca Web Dashboard & Exported Reports.
+ * Self-contained HTML/CSS/JS template for Codar Web Dashboard & Exported Reports.
  */
 export function renderDashboardHtml(data, isStaticExport = false) {
   const jsonData = JSON.stringify(data).replace(/</g, "\\u003c");
@@ -9,7 +9,7 @@ export function renderDashboardHtml(data, isStaticExport = false) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orca — Codebase Architecture & Context Radar</title>
+  <title>Codar — Codebase Architecture & Context Radar</title>
   <style>
     :root {
       --bg-primary: #0a0f1d;
@@ -274,7 +274,7 @@ export function renderDashboardHtml(data, isStaticExport = false) {
     <div class="logo-container">
       <span class="whale-logo">🐋</span>
       <div>
-        <div class="logo-title">ORCA ARCHITECTURE RADAR</div>
+        <div class="logo-title">CODAR ARCHITECTURE RADAR</div>
         <div style="font-size: 0.75rem; color: var(--text-dim);" id="header-meta"></div>
       </div>
     </div>
@@ -613,7 +613,7 @@ export function renderDashboardHtml(data, isStaticExport = false) {
         return;
       }
       const files = Array.from(selectedFiles);
-      const text = "<!-- ORCA CONTEXT BUNDLE: " + files.length + " files -->\\n" + files.map(f => "### File: " + f).join("\\n");
+      const text = "<!-- CODAR CONTEXT BUNDLE: " + files.length + " files -->\\n" + files.map(f => "### File: " + f).join("\\n");
       navigator.clipboard.writeText(text).then(() => {
         showToast("✓ Context bundle copied to clipboard!");
       }).catch(() => {
@@ -653,7 +653,7 @@ export function renderDashboardHtml(data, isStaticExport = false) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "orca-analysis.json";
+      a.download = "codar-analysis.json";
       a.click();
       URL.revokeObjectURL(url);
     }

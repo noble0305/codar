@@ -12,7 +12,7 @@ test("packageContext should package files and respect token limits", () => {
   assert.ok(result.items.length >= 2);
   assert.ok(result.usedTokens > 0);
   assert.ok(result.usedTokens <= 5000);
-  assert.ok(result.markdown.includes("<!-- ORCA CONTEXT BUNDLE:"));
+  assert.ok(result.markdown.includes("<!-- CODAR CONTEXT BUNDLE:"));
   assert.ok(result.markdown.includes("src/utils/tokens.js"));
 });
 

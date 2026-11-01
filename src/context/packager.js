@@ -159,7 +159,7 @@ export function packageContext(rootDir, targetFiles = [], options = {}) {
 
 function formatContextMarkdown(items, usedTokens, budget) {
   const lines = [];
-  lines.push(`<!-- ORCA CONTEXT BUNDLE: ${items.length} files | ${formatTokens(usedTokens)} / ${formatTokens(budget)} tokens -->`);
+  lines.push(`<!-- CODAR CONTEXT BUNDLE: ${items.length} files | ${formatTokens(usedTokens)} / ${formatTokens(budget)} tokens -->`);
   lines.push(`### Codebase Context\n`);
 
   for (const item of items) {

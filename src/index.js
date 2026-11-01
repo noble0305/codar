@@ -1,5 +1,5 @@
 /**
- * Orca — The Intelligent Codebase Architecture Radar & Context Engine
+ * Codar — The Intelligent Codebase Architecture Radar & Context Engine
  * Programmatic API Entrypoint
  */
 

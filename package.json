@@ -1,22 +1,22 @@
 {
-  "name": "orca-code",
+  "name": "codar-code",
   "version": "1.0.0",
   "description": "Intelligent Codebase Architecture Radar & Context Engine for AI Coding Agents and Developers",
   "main": "src/index.js",
   "type": "module",
   "bin": {
-    "orca": "./bin/orca.js"
+    "codar": "./bin/codar.js"
   },
   "scripts": {
-    "start": "node ./bin/orca.js",
+    "start": "node ./bin/codar.js",
     "test": "node --test test/*.test.js",
-    "scan": "node ./bin/orca.js scan",
-    "map": "node ./bin/orca.js map",
-    "audit": "node ./bin/orca.js audit",
-    "ui": "node ./bin/orca.js ui"
+    "scan": "node ./bin/codar.js scan",
+    "map": "node ./bin/codar.js map",
+    "audit": "node ./bin/codar.js audit",
+    "ui": "node ./bin/codar.js ui"
   },
   "keywords": [
-    "orca",
+    "codar",
     "ai-agent",
     "context-window",
     "codebase-analysis",
